@@ -1,5 +1,7 @@
 package edu.neu.coe.info6205.util;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -54,10 +56,14 @@ public class Timer {
      */
     public <T, U> double repeat(int n, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
         logger.trace("repeat: with " + n + " runs");
+        logger.info("repeat: with " + n + " runs");
+//        if (supplier.get() != null && ((T[])supplier.get()).length <=10) logger.info("Supplier data - "+ Arrays.toString((T[]) supplier.get()));
+        if (preFunction != null) preFunction.apply(supplier.get());
         for (int i = 0; i < n; i++) {
             function.apply(supplier.get());
             lap();
         }
+        if (postFunction != null) postFunction.accept((U) function);
         long init_time = ticks;
         init_time += getClock();
         return toMillisecs(init_time)/laps;
@@ -192,7 +198,7 @@ public class Timer {
      */
     private static double toMillisecs(long ticks) {
         // TO BE IMPLEMENTED
-    	return (double)getClock()/1000;
+    	return (double)ticks/1000000;
     }
 
     final static LazyLogger logger = new LazyLogger(Timer.class);

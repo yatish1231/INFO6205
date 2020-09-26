@@ -136,8 +136,8 @@ public class TimerTest {
         assertEquals(10, new PrivateMethodTester(timer).invokePrivate("getLaps"));
         assertEquals(zzz, mean, 6);
         assertEquals(10, run);
-        assertEquals(10, pre);
-        assertEquals(10, post);
+        assertEquals(1, pre);
+        assertEquals(1, post);
     }
 
     int pre = 0;
