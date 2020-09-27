@@ -27,6 +27,7 @@ For each problem size, I've generated 4 different types of arrays
 2. Partially sorted array
 3. Reverse sorted array
 4. Sorted array
+   
 For every problem set, I've run the InsertionSort.sort() method 10 times with 2 warm 
 up rounds.<br>
 As sorting a reverse sorted array gives the worst case scenario, I've plotted these values 
