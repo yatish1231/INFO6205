@@ -1,14 +1,7 @@
 # Assignment 2 - Insertion Sort
 
 ## Implementation
-'''Java
-    /**
-     * Sort the sub-array xs:from:to using insertion sort.
-     *
-     * @param xs   sort the array xs from "from" to "to".
-     * @param from the index of the first element to sort
-     * @param to   the index of the first element not to sort
-     */
+
     public void sort(X[] xs, int from, int to) {
         final Helper<X> helper = getHelper();
         // TO BE IMPLEMENTED
@@ -23,10 +16,10 @@
             }
         }
     }
-'''
+
 
 ## Observation
-'''
+   ***
 I've run the algorithm with 5 different problem sizes - 10, 100, 1000, 10000, 100000. Where 
 each problem size is 10 times larger than the previous.
 For each problem size, I've generated 4 different types of arrays
@@ -40,12 +33,12 @@ As sorting a reverse sorted array gives the worst case scenario, I've ploted the
 on a graph where 
 **x-axis = log10(N)** and **y-axis = log(t)** 
   *N = number of elements* *t = time in milliseconds*
-'''
+   ***
 ![graph](images/graph.png)
-'''
+   ***
 The slope of this graph is approximately 2.043
 This means that the order of growth is **O(N^2)**
-'''
+   ***
 
 ## Unit Tests
 #### 1. InsertionSortTest
