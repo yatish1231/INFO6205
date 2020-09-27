@@ -36,7 +36,7 @@ on a graph where
 > *N = number of elements* *t = time in milliseconds*
    ***
 ![graph](images/graph.png)
-####The slope of this graph is approximately **2.043** This means that the order of growth is **O(N^2)**
+#### The slope of this graph is approximately **2.043** This means that the order of growth is **O(N^2)**
 
 
 ## Unit Tests
