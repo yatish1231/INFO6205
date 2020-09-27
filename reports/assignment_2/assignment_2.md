@@ -1,13 +1,13 @@
-#Assignment 2 - Insertion Sort
+# Assignment 2 - Insertion Sort
 
 ## Observation
 1. 
 
 ## Unit Tests
 #### 1. InsertionSortTest
-      ![Insertion sort] (/reports/assignment_2/images/insertionSortTest.png)
+      ![Insertion sort](/reports/assignment_2/images/insertionSortTest.png)
 #### 2. TimerTest
-      ![Timer Test] (/reports/assignment_2/images/timerTest.png)
+      ![Timer Test](/reports/assignment_2/images/timerTest.png)
 
 ## Outputs
 '''Java
