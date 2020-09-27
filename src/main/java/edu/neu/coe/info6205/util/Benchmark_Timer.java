@@ -154,90 +154,75 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 
 	final static LazyLogger logger = new LazyLogger(Benchmark_Timer.class);
 
-	private enum type {
-		FULL, PARTIAL, REVERSE, SORTED
-	};
 
 	public static void main(String args[]) {
 		String description = "Timing the Insertion Sort";
 		InsertionSort<Integer> insert_sort = new InsertionSort<Integer>();
 		Benchmark_Timer<Integer[]> timer = new Benchmark_Timer<Integer[]>(description, insert_sort);
-		
+
 		for (int n = 10; n <= 100000; n *= 10) {
-			
+
 			logger.info("Size of array: " + n);
 			Integer[] arr = new Integer[n];
-			arr = generateArrayWithRandomNum(n, type.FULL);
+			arr = generateArrayWithRandomNum(n);
 			Integer[] arrFull = arr.clone();
-			if(n == 10) logger.info("Array before sort -- " + Arrays.toString(arrFull));
+			if (n == 10)
+				logger.info("Array before sort -- " + Arrays.toString(arrFull));
 			double time = timer.run(arrFull, 10);
-			if(n == 10) logger.info("Array after sort -- " + Arrays.toString(arrFull));
+			if (n == 10)
+				logger.info("Array after sort -- " + Arrays.toString(arrFull));
 			logger.info("Fully random array -- Average time to sort -- " + time + " milliseconds\n");
-			
+
 			Integer[] partArr = partialSortArray(arr);
-			if(n == 10) logger.info("Array before sort -- " + Arrays.toString(partArr));
+			if (n == 10)
+				logger.info("Array before sort -- " + Arrays.toString(partArr));
 			time = timer.run(partArr, 10);
-			if(n == 10) logger.info("Array after sort -- " + Arrays.toString(partArr));
+			if (n == 10)
+				logger.info("Array after sort -- " + Arrays.toString(partArr));
 			logger.info("Partially random array -- Average time to sort -- " + time + " milliseconds\n");
-			
+
 			Integer[] revArr = reverseSortArray(arr);
-			if(n == 10) logger.info("Array before sort -- " + Arrays.toString(revArr));
+			if (n == 10)
+				logger.info("Array before sort -- " + Arrays.toString(revArr));
 			time = timer.run(revArr, 10);
-			if(n == 10) logger.info("Array after sort -- " + Arrays.toString(revArr));
+			if (n == 10)
+				logger.info("Array after sort -- " + Arrays.toString(revArr));
 			logger.info("Reverse sorted random array -- Average time to sort -- " + time + " milliseconds\n");
-			
+
 			Integer[] sortArr = sortArray(arr);
-			if(n == 10) logger.info("Array before sort -- " + Arrays.toString(sortArr));
+			if (n == 10)
+				logger.info("Array before sort -- " + Arrays.toString(sortArr));
 			time = timer.run(sortArr, 10);
-			if(n == 10) logger.info("Array after sort -- " + Arrays.toString(sortArr));
+			if (n == 10)
+				logger.info("Array after sort -- " + Arrays.toString(sortArr));
 			logger.info("Sorted random array -- Average time to sort -- " + time + " milliseconds\n");
-			
+
 			logger.info("---------------------------------------------------------------------------");
 		}
 	}
 
-	public static Integer[] generateArrayWithRandomNum(int n, type t) {
-		
+	public static Integer[] generateArrayWithRandomNum(int n) {
+
 		Random randNum = new Random();
 		Integer[] arr = new Integer[n];
-		
-		if (t == type.FULL) {
-			for (int i = 0; i < n; i++) {
-				arr[i] = randNum.nextInt(5000);
-			}
-			return arr;
-		} else if (t == type.PARTIAL) {
-
-			for (int i = 0; i < n; i++) {
-				arr[i] = randNum.nextInt();
-			}
-			Arrays.sort(arr, n/2, n-1);
-			return arr;
-		} else if(t == type.REVERSE) {
-			for (int i = 0; i < n; i++) {
-				arr[i] = randNum.nextInt();
-			}
-			Arrays.sort(arr, Collections.reverseOrder());
-			return arr;
-		} else if (t == type.SORTED) {
-			
-			for (int i = 0; i < n; i++) {
-				arr[i] = randNum.nextInt();
-			}
-			Arrays.sort(arr);
-			return arr;
+		for (int i = 0; i < n; i++) {
+			arr[i] = randNum.nextInt(5000);
 		}
 		return arr;
+
 	}
+
 	public static Integer[] partialSortArray(Integer[] arr) {
 		int n = arr.length;
-		Arrays.sort(arr, n/2, n-1);
+		Arrays.sort(arr, n / 2, n - 1);
 		return arr;
 	}
+
 	public static Integer[] reverseSortArray(Integer[] arr) {
 		Arrays.sort(arr, Collections.reverseOrder());
 		return arr;
 	}
+
 	public static Integer[] sortArray(Integer[] arr) {
 		Arrays.sort(arr);
 		return arr;
