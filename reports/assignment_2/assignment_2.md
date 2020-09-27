@@ -5,9 +5,9 @@
 
 ## Unit Tests
 #### 1. InsertionSortTest
-      ![Insertion sort](reports/assignment_2/images/insertionSortTest.png)
+      ![Insertion sort](./images/insertionSortTest.png)
 #### 2. TimerTest
-      ![Timer Test](reports/assignment_2/images/timerTest.png)
+      ![Timer Test](./images/timerTest.png)
 
 ## Outputs
 '''Java
