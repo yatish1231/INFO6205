@@ -22,15 +22,19 @@
    ***
 I've run the algorithm with 5 different problem sizes - 10, 100, 1000, 10000, 100000. Where 
 each problem size is 10 times larger than the previous.
+
 For each problem size, I've generated 4 different types of arrays
     1. Random array
     2. Partially sorted array
     3. Reverse sorted array
     4. Sorted array
+
 For every problem set, I've run the InsertionSort.sort() method 10 times with 2 warm 
 up rounds.
-As sorting a reverse sorted array gives the worst case scenario, I've ploted these values 
-on a graph where 
+
+As sorting a reverse sorted array gives the worst case scenario, I've plotted these values 
+on a graph where
+ 
 **x-axis = log10(N)** and **y-axis = log(t)** 
   *N = number of elements* *t = time in milliseconds*
    ***
