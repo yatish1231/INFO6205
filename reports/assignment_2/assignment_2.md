@@ -32,12 +32,11 @@ For every problem set, I've run the InsertionSort.sort() method 10 times with 2 
 up rounds.<br>
 As sorting a reverse sorted array gives the worst case scenario, I've plotted these values 
 on a graph where 
-> **x-axis = log10(N)** and **y-axis = log(t)**<br> 
+#### **x-axis = log10(N)** and **y-axis = log(t)**<br> 
 > *N = number of elements* *t = time in milliseconds*
    ***
 ![graph](images/graph.png)
-> The slope of this graph is approximately 2.043
-> This means that the order of growth is **O(N^2)**
+####The slope of this graph is approximately **2.043** This means that the order of growth is **O(N^2)**
 
 
 ## Unit Tests
