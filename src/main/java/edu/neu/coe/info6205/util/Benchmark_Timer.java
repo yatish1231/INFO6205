@@ -73,7 +73,7 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 			fRun.accept(t);
 			return t;
 		};
-//		new Timer().repeat(getWarmupRuns(m), supplier, function, fPre, null);
+		new Timer().repeat(getWarmupRuns(m), supplier, function, fPre, null);
 
 		// Timed phase
 		return new Timer().repeat(m, supplier, function, fPre, fPost);
@@ -155,48 +155,27 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 
 	final static LazyLogger logger = new LazyLogger(Benchmark_Timer.class);
 
-
 	public static void main(String args[]) {
 		String description = "Timing the Insertion Sort";
 		InsertionSort<Integer> insert_sort = new InsertionSort<Integer>();
 		Benchmark_Timer<Integer[]> timer = new Benchmark_Timer<Integer[]>(description, insert_sort);
 		DecimalFormat format = new DecimalFormat("0.0000");
-		
+
 		for (int n = 10; n <= 100000; n *= 10) {
 
 			logger.info("Size of array: " + n);
-			Integer[] arr = new Integer[n];
-			arr = generateArrayWithRandomNum(n);
-			Integer[] arrFull = arr.clone();
-			if (n == 10)
-				logger.info("Array before sort -- " + Arrays.toString(arrFull));
-			double time = timer.run(arrFull, 10);
-			if (n == 10)
-				logger.info("Array after sort -- " + Arrays.toString(arrFull));
+
+			double time = timer.runFromSupplier(new generateArrayWithRandomNum(n), 10);
 			logger.info("Fully random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
-			Integer[] partArr = partialSortArray(arr);
-			if (n == 10)
-				logger.info("Array before sort -- " + Arrays.toString(partArr));
-			time = timer.run(partArr, 10);
-			if (n == 10)
-				logger.info("Array after sort -- " + Arrays.toString(partArr));
+			time = timer.runFromSupplier(new partialSortedArrayWithRandomNum(n), 10);
 			logger.info("Partially random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
-			Integer[] revArr = reverseSortArray(arr);
-			if (n == 10)
-				logger.info("Array before sort -- " + Arrays.toString(revArr));
-			time = timer.run(revArr, 10);
-			if (n == 10)
-				logger.info("Array after sort -- " + Arrays.toString(revArr));
-			logger.info("Reverse sorted random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
+			time = timer.runFromSupplier(new reverseSortedArrayWithRandomNum(n), 10);
+			logger.info("Reverse sorted random array -- Average time to sort -- " + format.format(time)
+					+ " milliseconds\n");
 
-			Integer[] sortArr = sortArray(arr);
-			if (n == 10)
-				logger.info("Array before sort -- " + Arrays.toString(sortArr));
-			time = timer.run(sortArr, 10);
-			if (n == 10)
-				logger.info("Array after sort -- " + Arrays.toString(sortArr));
+			time = timer.runFromSupplier(new sortedArrayWithRandomNum(n), 10);
 			logger.info("Sorted random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
 			logger.info("---------------------------------------------------------------------------");
@@ -214,19 +193,115 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 
 	}
 
-	public static Integer[] partialSortArray(Integer[] arr) {
-		int n = arr.length;
+	public static Integer[] partialSortArray(int n) {
+		Random randNum = new Random();
+		Integer[] arr = new Integer[n];
+		for (int i = 0; i < n; i++) {
+			arr[i] = randNum.nextInt(5000);
+		}
 		Arrays.sort(arr, n / 2, n - 1);
 		return arr;
 	}
 
-	public static Integer[] reverseSortArray(Integer[] arr) {
+	public static Integer[] reverseSortArray(int n) {
+		Random randNum = new Random();
+		Integer[] arr = new Integer[n];
+		for (int i = 0; i < n; i++) {
+			arr[i] = randNum.nextInt(5000);
+		}
 		Arrays.sort(arr, Collections.reverseOrder());
 		return arr;
 	}
 
-	public static Integer[] sortArray(Integer[] arr) {
+	public static Integer[] sortArray(int n) {
+		Random randNum = new Random();
+		Integer[] arr = new Integer[n];
+		for (int i = 0; i < n; i++) {
+			arr[i] = randNum.nextInt(5000);
+		}
 		Arrays.sort(arr);
 		return arr;
 	}
+
+	public static class generateArrayWithRandomNum implements Supplier<Integer[]> {
+
+		private int n;
+
+		public generateArrayWithRandomNum(int n) {
+			this.n = n;
+		}
+
+		@Override
+		public Integer[] get() {
+			Random randNum = new Random();
+			Integer[] arr = new Integer[n];
+			for (int i = 0; i < n; i++) {
+				arr[i] = randNum.nextInt(5000);
+			}
+			return arr;
+		}
+	}
+
+	public static class partialSortedArrayWithRandomNum implements Supplier<Integer[]> {
+
+		private int n;
+
+		public partialSortedArrayWithRandomNum(int n) {
+			this.n = n;
+		}
+
+		@Override
+		public Integer[] get() {
+			Random randNum = new Random();
+			Integer[] arr = new Integer[n];
+			for (int i = 0; i < n; i++) {
+				arr[i] = randNum.nextInt(5000);
+			}
+			Arrays.sort(arr, n / 2, n - 1);
+			return arr;
+		}
+	}
+
+	public static class reverseSortedArrayWithRandomNum implements Supplier<Integer[]> {
+
+		private int n;
+
+		public reverseSortedArrayWithRandomNum(int n) {
+			this.n = n;
+		}
+
+		@Override
+		public Integer[] get() {
+			Random randNum = new Random();
+			Integer[] arr = new Integer[n];
+			for (int i = 0; i < n; i++) {
+				arr[i] = randNum.nextInt(5000);
+			}
+			Arrays.sort(arr, Collections.reverseOrder());
+			return arr;
+		}
+
+	}
+	
+	public static class sortedArrayWithRandomNum implements Supplier<Integer[]> {
+
+		private int n;
+
+		public sortedArrayWithRandomNum(int n) {
+			this.n = n;
+		}
+
+		@Override
+		public Integer[] get() {
+			Random randNum = new Random();
+			Integer[] arr = new Integer[n];
+			for (int i = 0; i < n; i++) {
+				arr[i] = randNum.nextInt(5000);
+			}
+			Arrays.sort(arr);
+			return arr;
+		}
+
+	}
+	
 }

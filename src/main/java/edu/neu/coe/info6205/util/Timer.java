@@ -73,9 +73,11 @@ public class Timer {
 			T t = supplier.get();
 			if (preFunction != null)
 				t = preFunction.apply(t);
+			if (t.getClass().equals(Integer[].class) && ((Integer[])t).length == 10 && i == n-1) logger.info("Array before sort ---------------- " + Arrays.toString((Integer[])t));
 			resume();
 			U ans = function.apply(t);
 			pauseAndLap();
+			if (t.getClass().equals(Integer[].class) && ((Integer[])t).length == 10 && i == n-1) logger.info("Array after sort ----------------- " + Arrays.toString((Integer[])t));
 			if (postFunction != null)
 				postFunction.accept(ans);
 		}
