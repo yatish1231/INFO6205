@@ -4,6 +4,7 @@
 
 package edu.neu.coe.info6205.util;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -159,7 +160,8 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 		String description = "Timing the Insertion Sort";
 		InsertionSort<Integer> insert_sort = new InsertionSort<Integer>();
 		Benchmark_Timer<Integer[]> timer = new Benchmark_Timer<Integer[]>(description, insert_sort);
-
+		DecimalFormat format = new DecimalFormat("0.0000");
+		
 		for (int n = 10; n <= 100000; n *= 10) {
 
 			logger.info("Size of array: " + n);
@@ -171,7 +173,7 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 			double time = timer.run(arrFull, 10);
 			if (n == 10)
 				logger.info("Array after sort -- " + Arrays.toString(arrFull));
-			logger.info("Fully random array -- Average time to sort -- " + time + " milliseconds\n");
+			logger.info("Fully random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
 			Integer[] partArr = partialSortArray(arr);
 			if (n == 10)
@@ -179,7 +181,7 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 			time = timer.run(partArr, 10);
 			if (n == 10)
 				logger.info("Array after sort -- " + Arrays.toString(partArr));
-			logger.info("Partially random array -- Average time to sort -- " + time + " milliseconds\n");
+			logger.info("Partially random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
 			Integer[] revArr = reverseSortArray(arr);
 			if (n == 10)
@@ -187,7 +189,7 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 			time = timer.run(revArr, 10);
 			if (n == 10)
 				logger.info("Array after sort -- " + Arrays.toString(revArr));
-			logger.info("Reverse sorted random array -- Average time to sort -- " + time + " milliseconds\n");
+			logger.info("Reverse sorted random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
 			Integer[] sortArr = sortArray(arr);
 			if (n == 10)
@@ -195,7 +197,7 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 			time = timer.run(sortArr, 10);
 			if (n == 10)
 				logger.info("Array after sort -- " + Arrays.toString(sortArr));
-			logger.info("Sorted random array -- Average time to sort -- " + time + " milliseconds\n");
+			logger.info("Sorted random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
 			logger.info("---------------------------------------------------------------------------");
 		}
