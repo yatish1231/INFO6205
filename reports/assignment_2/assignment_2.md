@@ -1,7 +1,7 @@
 # Assignment 2 - Insertion Sort
 
 ## Implementation
-
+```java
     public void sort(X[] xs, int from, int to) {
         final Helper<X> helper = getHelper();
         // TO BE IMPLEMENTED
@@ -16,7 +16,7 @@
             }
         }
     }
-
+```
 
 ## Observation
    ***
@@ -41,6 +41,7 @@ on a graph where
 
 ## Unit Tests
 #### 1. InsertionSortTest
+![Insertion Sort](images/insertionSortUnit.png)
 ![Insertion sort](images/insertionSortTest.png)
 #### 2. TimerTest
 ![Timer Test](images/timerTest.png)
