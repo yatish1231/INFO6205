@@ -8,6 +8,11 @@
 package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
+import java.util.Random;
+
+import edu.neu.coe.info6205.util.Benchmark_Timer;
+import edu.neu.coe.info6205.util.LazyLogger;
+import edu.neu.coe.info6205.util.toExcelWorkbook;
 
 /**
  * Height-weighted Quick Union with Path Compression
@@ -81,6 +86,11 @@ public class UF_HWQUPC implements UF {
     public int find(int p) {
         validate(p);
         int root = p;
+        
+        while(root != parent[root]) {
+        	if(pathCompression) doPathCompression(root);
+        	root = parent[root];
+        }
         // TO BE IMPLEMENTED
         return root;
     }
@@ -166,9 +176,27 @@ public class UF_HWQUPC implements UF {
     private final int[] height;   // height[i] = height of subtree rooted at i
     private int count;  // number of components
     private boolean pathCompression;
-
+    final static LazyLogger logger = new LazyLogger(UF_HWQUPC.class);
+    
     private void mergeComponents(int i, int j) {
         // TO BE IMPLEMENTED make shorter root point to taller one
+    	int root_i = i;
+    	int root_j = j;
+    	if(height[root_i] == height[root_j]) {
+    		updateParent(root_j, root_i);
+    		updateHeight(root_i, root_j);
+    		return;
+    	}
+    	if(height[root_i] < height[root_j]) {
+    		updateParent(root_i, root_j);
+    		updateHeight(root_j, root_i);
+    		return;
+    	}
+    	if(height[root_i]>height[root_j]) {
+    		updateParent(root_j, root_i);
+    		updateHeight(root_i, root_j);
+    		return;
+    	}
     }
 
     /**
@@ -176,5 +204,53 @@ public class UF_HWQUPC implements UF {
      */
     private void doPathCompression(int i) {
         // TO BE IMPLEMENTED update parent to value of grandparent
+    	parent[i] = parent[parent[i]];
     }
+    
+    public static int count(int n) {
+    	
+    	UF_HWQUPC uf_client = new UF_HWQUPC(n);
+    	Random random_num = new Random();
+    	int num_connections = 0;
+    	
+    	while(uf_client.components() > 1) {
+    		int num1 = random_num.nextInt(n);
+    		int num2 = random_num.nextInt(n);
+//    		logger.info("Num 1 - "+num1+" num 2 - "+num2);
+    		num_connections++;
+    		if(!uf_client.connected(num1, num2)) {
+//    			logger.info("Num 1 - "+num1+" num 2 - "+num2 + " not connected!");
+    			uf_client.connect(num1, num2);
+//    			num_connections++;
+//    			logger.info("Connected - "+ num1 + " - "+num2 +" connections made - "+num_connections);
+//    			logger.info("Current number of components - "+uf_client.components());
+    		}
+    		
+    		}
+    	
+    	return num_connections;
+    }
+    
+    public static void main(String args[]) {
+    	int avg_connections = 0;
+    	Integer[][] obj = new Integer[5][2];
+    	int count = 0;
+    	toExcelWorkbook workbook = new toExcelWorkbook("UF_HW");
+    	for(int j = 10; j<=100000;j*=10) {
+    		logger.info("------------------------------");
+    		logger.info("Number of sites - "+j);
+    	for(int i = 0; i <10; i++) {
+    		
+    		int connections = count(j);
+    		logger.info("Number of connections made - "+connections);
+    		avg_connections += connections;
+    	}
+    	obj[count][0] = j;
+    	obj[count][1] = avg_connections/10;
+    	count++;
+    	logger.info("Average connections required - "+avg_connections/10);
+    }
+    workbook.addExcelSheet(obj, 1);
+    workbook.writeToFile(null);
+}
 }
