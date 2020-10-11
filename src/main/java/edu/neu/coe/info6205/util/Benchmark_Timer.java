@@ -17,6 +17,8 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import edu.neu.coe.info6205.sort.simple.InsertionSort;
+import edu.neu.coe.info6205.union_find.UF_HWQUPC;
+import edu.neu.coe.info6205.union_find.WQUPC;
 
 import static edu.neu.coe.info6205.util.Utilities.formatWhole;
 
@@ -156,29 +158,32 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 	final static LazyLogger logger = new LazyLogger(Benchmark_Timer.class);
 
 	public static void main(String args[]) {
-		String description = "Timing the Insertion Sort";
-		InsertionSort<Integer> insert_sort = new InsertionSort<Integer>();
-		Benchmark_Timer<Integer[]> timer = new Benchmark_Timer<Integer[]>(description, insert_sort);
+		String description = "Timing WQUPC";
+//		InsertionSort<Integer> insert_sort = new InsertionSort<Integer>();
+		WQUPC uf_client = new WQUPC(1);
+		UF_HWQUPC uf_client_H = new UF_HWQUPC(1);
+		Benchmark_Timer<Integer> timer = new Benchmark_Timer<Integer>(description, uf_client);
+		
 		DecimalFormat format = new DecimalFormat("0.0000");
 
-		for (int n = 10; n <= 100000; n *= 10) {
+		for (int n = 10; n <= 10000000; n *= 10) {
 
-			logger.info("Size of array: " + n);
+			logger.info("Number of sites: " + n);
 
-			double time = timer.runFromSupplier(new generateArrayWithRandomNum(n), 10);
-			logger.info("Fully random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
+			double time = timer.run(n, 10);
+			logger.info("-- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
-			time = timer.runFromSupplier(new partialSortedArrayWithRandomNum(n), 10);
-			logger.info("Partially random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
-
-			time = timer.runFromSupplier(new reverseSortedArrayWithRandomNum(n), 10);
-			logger.info("Reverse sorted random array -- Average time to sort -- " + format.format(time)
-					+ " milliseconds\n");
-
-			time = timer.runFromSupplier(new sortedArrayWithRandomNum(n), 10);
-			logger.info("Sorted random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
-
-			logger.info("---------------------------------------------------------------------------");
+//			time = timer.runFromSupplier(new partialSortedArrayWithRandomNum(n), 10);
+//			logger.info("Partially random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
+//
+//			time = timer.runFromSupplier(new reverseSortedArrayWithRandomNum(n), 10);
+//			logger.info("Reverse sorted random array -- Average time to sort -- " + format.format(time)
+//					+ " milliseconds\n");
+//
+//			time = timer.runFromSupplier(new sortedArrayWithRandomNum(n), 10);
+//			logger.info("Sorted random array -- Average time to sort -- " + format.format(time) + " milliseconds\n");
+//
+//			logger.info("---------------------------------------------------------------------------");
 		}
 	}
 

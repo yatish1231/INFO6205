@@ -3,14 +3,20 @@
  */
 package edu.neu.coe.info6205.union_find;
 
+import java.util.Random;
+import java.util.function.Consumer;
+
+import edu.neu.coe.info6205.util.LazyLogger;
+
 /**
  * Weighted Quick Union with Path Compression
  */
-public class WQUPC {
+public class WQUPC implements Consumer<Integer>{
     private final int[] parent;   // parent[i] = parent of i
     private final int[] size;   // size[i] = size of subtree rooted at i
     private int count;  // number of components
-
+    final static LazyLogger logger = new LazyLogger(WQUPC.class);
+    
     /**
      * Initializes an empty union–find data structure with {@code n} sites
      * {@code 0} through {@code n-1}. Each site is initially in its own
@@ -55,13 +61,14 @@ public class WQUPC {
         validate(p);
         int root = p;
         while (root != parent[root]) {
+        	parent[root] = parent[parent[root]];
             root = parent[root];
         }
-        while (p != root) {
-            int newp = parent[p];
-            parent[p] = root;
-            p = newp;
-        }
+//        while (p != root) {
+//            int newp = parent[p];
+//            parent[p] = root;
+//            p = newp;
+//        }
         return root;
     }
 
@@ -110,5 +117,34 @@ public class WQUPC {
         }
         count--;
     }
+
+    public static int count(int n) {
+    	
+    	WQUPC uf_client = new WQUPC(n);
+    	Random random_num = new Random();
+    	int num_connections = 0;
+    	
+    	while(uf_client.count() > 1) {
+    		int num1 = random_num.nextInt(n);
+    		int num2 = random_num.nextInt(n);
+    		logger.info("Num 1 - "+num1+" num 2 - "+num2);
+    		num_connections++;
+    		if(!uf_client.connected(num1, num2)) {
+    			logger.info("Num 1 - "+num1+" num 2 - "+num2 + " not connected!");
+    			uf_client.union(num1, num2);
+//    			num_connections++;
+//    			logger.info("Connected - "+ num1 + " - "+num2 +" connections made - "+num_connections);
+    			logger.info("Current number of components - "+uf_client.count());
+    		}
+    		
+    		}
+    	
+    	return num_connections;
+    }
+	@Override
+	public void accept(Integer arg0) {
+		// TODO Auto-generated method stub
+		count(arg0);
+	}
 
 }

@@ -9,6 +9,7 @@ package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import edu.neu.coe.info6205.util.Benchmark_Timer;
 import edu.neu.coe.info6205.util.LazyLogger;
@@ -17,7 +18,7 @@ import edu.neu.coe.info6205.util.toExcelWorkbook;
 /**
  * Height-weighted Quick Union with Path Compression
  */
-public class UF_HWQUPC implements UF {
+public class UF_HWQUPC implements UF, Consumer<Integer>{
     /**
      * Ensure that site p is connected to site q,
      *
@@ -253,4 +254,10 @@ public class UF_HWQUPC implements UF {
     workbook.addExcelSheet(obj, 1);
     workbook.writeToFile(null);
 }
+
+	@Override
+	public void accept(Integer arg0) {
+		// TODO Auto-generated method stub
+		count(arg0);
+	}
 }
