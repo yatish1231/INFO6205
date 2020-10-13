@@ -61,7 +61,7 @@ public class WQUPC implements Consumer<Integer>{
         validate(p);
         int root = p;
         while (root != parent[root]) {
-        	parent[root] = parent[parent[root]];
+//        	parent[root] = parent[parent[root]];
             root = parent[root];
         }
 //        while (p != root) {
@@ -110,10 +110,16 @@ public class WQUPC implements Consumer<Integer>{
         // make smaller root point to larger one
         if (size[rootP] < size[rootQ]) {
             parent[rootP] = rootQ;
-            size[rootQ] += size[rootP];
+//            size[rootQ] += size[rootP];
+            if(q != rootQ) {
+            	size[rootQ]++;
+            }
         } else {
             parent[rootQ] = rootP;
-            size[rootP] += size[rootQ];
+//            size[rootP] += size[rootQ];
+            if(size[rootP] == 1 || p != rootP) {
+            	size[rootP]++;
+            }
         }
         count--;
     }
@@ -127,14 +133,14 @@ public class WQUPC implements Consumer<Integer>{
     	while(uf_client.count() > 1) {
     		int num1 = random_num.nextInt(n);
     		int num2 = random_num.nextInt(n);
-    		logger.info("Num 1 - "+num1+" num 2 - "+num2);
+//    		logger.info("Num 1 - "+num1+" num 2 - "+num2);
     		num_connections++;
     		if(!uf_client.connected(num1, num2)) {
-    			logger.info("Num 1 - "+num1+" num 2 - "+num2 + " not connected!");
+//    			logger.info("Num 1 - "+num1+" num 2 - "+num2 + " not connected!");
     			uf_client.union(num1, num2);
 //    			num_connections++;
 //    			logger.info("Connected - "+ num1 + " - "+num2 +" connections made - "+num_connections);
-    			logger.info("Current number of components - "+uf_client.count());
+//    			logger.info("Current number of components - "+uf_client.count());
     		}
     		
     		}
