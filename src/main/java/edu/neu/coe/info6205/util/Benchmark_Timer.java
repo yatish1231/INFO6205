@@ -166,11 +166,11 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
 		
 		DecimalFormat format = new DecimalFormat("0.0000");
 
-		for (int n = 10; n <= 10000000; n *= 10) {
+		for (int n = 100000; n <= 10000000; n *= 10) {
 
 			logger.info("Number of sites: " + n);
 
-			double time = timer.run(n, 10);
+			double time = timer.run(n, 5);
 			logger.info("-- Average time to sort -- " + format.format(time) + " milliseconds\n");
 
 //			time = timer.runFromSupplier(new partialSortedArrayWithRandomNum(n), 10);
