@@ -32,11 +32,11 @@ public class Main {
                 ParSort.sort(array, 0, array.length);
             }
             long endTime = System.currentTimeMillis();
-            time = (endTime - startTime)/10;
+            time = (endTime - startTime);
             timeList.add(time);
 
 
-            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\tAverage for 10times Time:" + time + "ms");
+            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\tAverage for 10times Time:" + time/10 + "ms");
 
         }
         try {
