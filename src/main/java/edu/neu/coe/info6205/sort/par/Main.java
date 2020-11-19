@@ -22,30 +22,33 @@ public class Main {
         Random random = new Random();
         int[] array = new int[2000000];
         ArrayList<Long> timeList = new ArrayList<>();
+        for(int p=2; p<=16; p*=2) {
         for (int j = 50; j < 100; j++) {
             ParSort.cutoff = 10000 * (j + 1);
+            ParSort.maxThread = p;
+            ForkJoinPool myPool = new ForkJoinPool(p);
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
             long time;
             long startTime = System.currentTimeMillis();
             for (int t = 0; t < 10; t++) {
                 for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
-                ParSort.sort(array, 0, array.length);
+                ParSort.sort(array, 0, array.length, myPool, 0);
             }
             long endTime = System.currentTimeMillis();
             time = (endTime - startTime);
             timeList.add(time);
 
 
-            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\tAverage for 10times Time:" + time/10 + "ms");
+            System.out.println("cutoff：" + (ParSort.cutoff) + "threads: "+ p +"\t\tAverage for 10times Time:" + time/10 + "ms");
 
         }
         try {
-            FileOutputStream fis = new FileOutputStream("./result.csv");
+            FileOutputStream fis = new FileOutputStream("./result" + p + ".csv");
             OutputStreamWriter isr = new OutputStreamWriter(fis);
             BufferedWriter bw = new BufferedWriter(isr);
             int j = 0;
             for (long i : timeList) {
-                String content = (double) 10000 * (j + 1) / 2000000 + "," + (double) i / 10 + "\n";
+                String content = (double) 10000 * (j + 1) + "," + (double) i / 10 + "\n";
                 j++;
                 bw.write(content);
                 bw.flush();
@@ -54,6 +57,7 @@ public class Main {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
         }
     }
 
