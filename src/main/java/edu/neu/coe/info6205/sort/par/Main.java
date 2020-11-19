@@ -32,15 +32,15 @@ public class Main {
                 ParSort.sort(array, 0, array.length);
             }
             long endTime = System.currentTimeMillis();
-            time = (endTime - startTime);
+            time = (endTime - startTime)/10;
             timeList.add(time);
 
 
-            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
+            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\tAverage for 10times Time:" + time + "ms");
 
         }
         try {
-            FileOutputStream fis = new FileOutputStream("./src/result.csv");
+            FileOutputStream fis = new FileOutputStream("./result.csv");
             OutputStreamWriter isr = new OutputStreamWriter(fis);
             BufferedWriter bw = new BufferedWriter(isr);
             int j = 0;
