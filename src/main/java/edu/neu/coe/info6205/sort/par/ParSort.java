@@ -45,7 +45,7 @@ class ParSort {
             });
 
             parsort.whenComplete((result, throwable) -> System.arraycopy(result, 0, array, from, result.length));
-//            System.out.println("# threads: "+ myPool.getRunningThreadCount());
+            System.out.println("# threads: "+ myPool.getRunningThreadCount());
             parsort.join();
         }
     }

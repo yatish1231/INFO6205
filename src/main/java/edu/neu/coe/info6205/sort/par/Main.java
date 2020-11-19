@@ -21,8 +21,9 @@ public class Main {
         System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
         Random random = new Random();
         int[] array = new int[2000000];
+        for(int p=1; p<=16; p*=2) {
         ArrayList<Long> timeList = new ArrayList<>();
-        for(int p=2; p<=16; p*=2) {
+        
         for (int j = 50; j < 100; j++) {
             ParSort.cutoff = 10000 * (j + 1);
             ParSort.maxThread = p;
